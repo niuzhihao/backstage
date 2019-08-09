@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
-
+import Left from './Left'
 class Home extends Component {
     render() {
         return (
-            <div>
+            <div className='wrap'>
+                <Left></Left>
                 home
             </div>
         );
