@@ -13,8 +13,117 @@ html,body{
 #root{
     width: 100%;
     height: 100%;
+    div{
+        display: flex
+    }
 }
 .ant-collapse{
     width: 20%;
     height: 100%;
+}
+.wrap{
+    width: 100%;
+    display: flex;
+    flex-direction: column
+}
+.con{
+    display: flex
+}
+.right{
+    width: 80%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+.header{
+    width: 100%;
+    height: 50px;
+    background-color: rgba(42, 130, 228, 1);
+}
+.login-form{
+    width: 50%;
+    height: 300px;
+    margin: 0 auto;
+}
+.tit{
+    width: 100%;
+    height: 40px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    span.active{
+        background-color: green;
+        color: #ffffff;
+        border-radius: 10px;
+        width: 10%;
+        text-align: center;
+    }
+}
+.grouplist-con{
+    width: 100%;
+    height: 300px;
+    display: flex;
+    div{
+        flex:7;
+        display: flex;
+        flex-wrap: wrap;
+        dl{
+            width: 50%;
+            height: 100px;
+            display: flex;
+            dt{
+                width: 30%;
+                height: 100%;
+                img{
+                    width: 100%;
+                    height: 100%;
+                    display: block;
+                }
+            }
+            dd{
+                width: 50%;
+                height: 100%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                &:nth-child(3){
+                    width: 20%;
+                    height: 100%;
+                }
+            }
+        }
+        &:nth-child(2){
+            flex:3
+        }
+    }
+}
+.member-nav{
+    width: 100%;
+    height: 50px;
+    display: flex;
+    span{
+        flex:1;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+}
+.ant-spin-container{
+    display: flex;
+    flex-direction: column;
+}
+.ant-table-tbody tr td {
+    img{
+        width: 10%;
+        height: 15%;
+        border-radius: 50%;
+    }
+    span{
+        margin: 0 5px;
+    }
+}
+.ant-modal-content{
+    input{
+        border: 1px solid #ccc;
+    }
 }
