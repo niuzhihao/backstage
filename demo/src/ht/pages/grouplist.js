@@ -21,15 +21,12 @@ class grouplist extends Component {
 
     handleOk = e => {
         console.log(e);
-        let {groupName,leaderUserName,data}=this.state
+        let {groupName,leaderUserName}=this.state
         api.group.addgroup({groupName,groupPersonNum:10,leaderUserName,groupIcon:"http://i1.hdslb.com/bfs/archive/9037080061a6e4302690687035fceda42984bbf4.jpg"}).then(res=>{
             console.log(res)
             if(res.data.code===1){
                 message.success(res.data.message);
-                api.group.grouplist().then(res=>{
-                    data=res.data.result
-                    this.setState({data})
-                })
+                this.date()
             }
         })
 
