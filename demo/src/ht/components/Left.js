@@ -67,8 +67,28 @@ class Left extends Component {
             <Menu.Item key="5" onClick={this.grouplist.bind(this)}>小组列表</Menu.Item>
             <Menu.Item key="6" onClick={this.member.bind(this)}>成员管理</Menu.Item>
           </SubMenu>
+          <SubMenu
+            key="sub3"
+            title={
+              <span>
+                <Icon type="setting" />
+                <span>投票管理</span>
+              </span>
+            }
+          >
+            <Menu.Item key="7" onClick={this.startVote.bind(this)}>发起投票</Menu.Item>
+            <Menu.Item key="8" onClick={this.Votelist.bind(this)}>投票列表</Menu.Item>
+          </SubMenu>
         </Menu>
         )
+    }
+    startVote(){
+      let {push}=this.props.history
+      push('/startvote')
+    }
+    Votelist(){
+      let {push}=this.props.history
+      push('/votelist')
     }
 }
 

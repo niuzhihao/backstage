@@ -3,7 +3,7 @@ import islogin from '../components/islogin'
 import Left from '../components/Left'
 import Head from '../components/Header'
 import api from '../api/api'
-import {Table, Modal, message } from 'antd'
+import {Table, Modal, message, Input } from 'antd'
 
 class alluser extends Component {
     state={
@@ -52,9 +52,7 @@ class alluser extends Component {
                     }else{
                         message.error("修改失败");
                     }
-                })
-
-                
+                })    
             }
         })
 
@@ -77,7 +75,7 @@ class alluser extends Component {
         password=record.password
         phoneNum=record.phoneNum
         realName=record.realName
-        address=record.address
+        address=record.address?record.address:''
         key=record.key
         userIcon=record.userIcon
         userType=record.userType
@@ -93,11 +91,11 @@ class alluser extends Component {
             userType
         })
     }
-    removeusers(record){
+    removeusers(text){
         let {alluser}=this.state
         alluser.forEach((item,index)=>{
-            if(item.key===record.key){
-                api.user.removeuser({userId:record.key}).then(res=>{
+            if(item.key===text.key){
+                api.user.removeuser({userId:text.key}).then(res=>{
                     if(res.data.code===1){
                         message.success(res.data.message);
                         alluser.splice(index,1)
@@ -109,6 +107,13 @@ class alluser extends Component {
                     }
                 })
             }
+        })
+    }
+    searchuser(e){
+        let value=e.target.value
+        api.user.search(value).then(res=>{
+            console.log(res.data)
+            this.changeList(res)
         })
     }
     render() {
@@ -127,6 +132,11 @@ class alluser extends Component {
                         <img src={text} alt=''></img>
                     )
                 }
+            },
+            {
+                title:"真实姓名",
+                dataIndex:"realName",
+                key:"realName"
             },
             {
                 title:"action",
@@ -149,11 +159,12 @@ class alluser extends Component {
                 <div className='con'>
                 <Left></Left>
                     <div className='right'>
+                        <Input placeholder="searchuser" onInput={this.searchuser.bind(this)}/>
                         <div className='tit'>所有用户</div>
                         <Table columns={columns} dataSource={alluser}></Table>
                     </div>
                 </div>
-                <div>
+                <>
                     <Modal
                     title="Basic Modal"
                     visible={this.state.visible}
@@ -176,13 +187,13 @@ class alluser extends Component {
                     <p>地址：<input onChange={this.changeusermessage.bind(this)} name="address" type="text" value={address}/></p>
 
                     </Modal>
-                </div>
+                </>
             </div>
         );
     }
     changeusermessage(e){
-        const value=e.target.value
-        const name=e.target.name
+        let value=e.target.value
+        let name=e.target.name
         this.setState({
             [name]:value
         })
@@ -190,8 +201,12 @@ class alluser extends Component {
 
     componentDidMount(){
         api.user.alluser().then(res=>{
-            let alluserNew=[]
+            this.changeList(res)
+        })
+    }
 
+    changeList(res){
+        let alluserNew=[]
             res.data.result.forEach(item=>{
                 alluserNew.push({
                     key:item.userId,
@@ -208,7 +223,6 @@ class alluser extends Component {
             this.setState({
                 alluser:alluserNew
             })
-        })
     }
 }
 

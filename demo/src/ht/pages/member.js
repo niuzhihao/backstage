@@ -8,6 +8,7 @@ class member extends Component {
         data:[]
     }
     render() {
+        let {data}=this.state
         return (
             <div className='wrap'>
                 <Head></Head>
@@ -15,10 +16,9 @@ class member extends Component {
                     <Left></Left>
                     <div className='right'>
                     <Radio.Group defaultValue="1" buttonStyle="solid">
-                        <Radio.Button value="1">Hangzhou</Radio.Button>
-                        <Radio.Button value="2">Shanghai</Radio.Button>
-                        <Radio.Button value="3">Beijing</Radio.Button>
-                        <Radio.Button value="4">Chengdu</Radio.Button>
+                       {
+                           data&&data.map((item,index)=> <Radio.Button key={index} value={index}>{item.groupName}</Radio.Button>)
+                       }
                     </Radio.Group>
                     </div>
                 </div>

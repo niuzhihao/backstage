@@ -17,6 +17,7 @@ class login extends Component {
                 if(res.data.code===1){
                     message.success(res.message);
                     window.localStorage.setItem('userName',userName)
+                    window.localStorage.setItem('userId',res.data.userId)
                     window.localStorage.setItem('token',res.data.token)
                     history.push('/alluser')
                 }else{

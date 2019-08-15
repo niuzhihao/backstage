@@ -5,7 +5,7 @@ class register extends Component {
         userName:'',
         password:'',
         checkpass:'',
-        realName:'沐沐恩'
+        realName:''
     }
     submitmsg(){
         let {userName,password,realName}=this.state
@@ -43,8 +43,8 @@ class register extends Component {
     changepassword(e){
         this.setState({password:e.target.value})
     }
-    changecheckpass(e){
-        this.setState({checkpass:e.target.value})
+    changerealName(e){
+        this.setState({realName:e.target.value})
     }
     render() {
         let {userName,password,checkpass}=this.state
@@ -70,15 +70,15 @@ class register extends Component {
                 <Form.Item>
                     <Input
                     prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />}
-                    type="password"
-                    placeholder="Password"
+                    type="text"
+                    placeholder="realName"
                     value={checkpass}
-                    onChange={this.changecheckpass.bind(this)}
+                    onChange={this.changerealName.bind(this)}
                     />
                 </Form.Item>
                 <Form.Item>
                 <Button type="primary" onClick={this.submitmsg.bind(this)} htmlType="submit" className="login-form-button">
-                    Log in
+                    Register
                 </Button>
                 </Form.Item>
             </Form>

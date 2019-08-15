@@ -6,7 +6,8 @@ const api={
         register:(data)=>request.post('/register',data),
         alluser:data=>request.get('/user',data),
         upuser:data=>request.post('/user/update',data),
-        removeuser:data=>request.post('/user/delete',data)
+        removeuser:data=>request.post('/user/delete',data),
+        search:data=>request.get('/user/search?input='+data,data)
     },
     group:{
         grouplist:(data)=>request.get('/group/list',data),
