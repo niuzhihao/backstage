@@ -3,7 +3,7 @@ import islogin from '../components/islogin'
 import Left from '../components/Left'
 import Head from '../components/Header'
 import api from '../api/api'
-import {Table, Modal, message, Input } from 'antd'
+import {Table, Modal, message, Input, Popconfirm } from 'antd'
 
 class alluser extends Component {
     state={
@@ -28,33 +28,19 @@ class alluser extends Component {
     
       handleOk = e => {
         console.log(e);
-        let {alluser,key,userName,password,phoneNum,realName,address,userIcon,userType}=this.state
-        alluser.forEach((item,index)=>{
-            if(item.key===key){
-
+        let {key,userName,password,phoneNum,realName,address,userType}=this.state
+        console.log(userName)
                 api.user.upuser({userId:key,address,realName,password,phoneNum,userType}).then(res=>{
                     console.log(res.data)
                     if(res.data.code===1){
-                        message.success(res.data.message);
-                        alluser[index]={
-                            userName,
-                            password,
-                            phoneNum,
-                            realName,
-                            address,
-                            key,
-                            userIcon,
-                            userType
-                        }
-                        this.setState({
-                            alluser
+                        api.user.alluser().then(res=>{
+                            this.changeList(res)
                         })
+                        message.success(res.data.message);
                     }else{
                         message.error("修改失败");
                     }
                 })    
-            }
-        })
 
         this.setState({
           visible: false,
@@ -67,6 +53,20 @@ class alluser extends Component {
           visible: false,
         });
       };
+
+     confirm(record) {
+         console.log(record)
+        this.removeusers(record)
+      }
+      
+     cancel(e) {
+        console.log(e);
+        message.error('Click on No');
+      }
+
+
+
+
 
     changealert(record){
         console.log(record)
@@ -91,11 +91,11 @@ class alluser extends Component {
             userType
         })
     }
-    removeusers(text){
+    removeusers(record){
         let {alluser}=this.state
         alluser.forEach((item,index)=>{
-            if(item.key===text.key){
-                api.user.removeuser({userId:text.key}).then(res=>{
+            if(item.key===record.key){
+                api.user.removeuser({userId:record.key}).then(res=>{
                     if(res.data.code===1){
                         message.success(res.data.message);
                         alluser.splice(index,1)
@@ -128,9 +128,7 @@ class alluser extends Component {
                 dataIndex:"userIcon",
                 key:"userIcon",
                 render:(text)=>{
-                    return (
-                        <img src={text} alt=''></img>
-                    )
+                    return <img src={text} alt=''></img>
                 }
             },
             {
@@ -147,7 +145,15 @@ class alluser extends Component {
                         <span onClick={this.changealert.bind(this,record)}>详情</span>
                         <span>设置管理</span>
                         <span onClick={this.changealert.bind(this,record)}>编辑</span>
-                        <span onClick={this.removeusers.bind(this,record)}>删除</span>
+                        <Popconfirm
+                        title="Are you sure delete this task?"
+                        onConfirm={this.confirm.bind(this,record)}
+                        onCancel={this.cancel.bind(this)}
+                        okText="Yes"
+                        cancelText="No"
+                    >
+                        <span>删除</span>
+                    </Popconfirm>
                     </span>
                 }
             }

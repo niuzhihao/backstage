@@ -11,9 +11,10 @@ const api={
     },
     group:{
         grouplist:(data)=>request.get('/group/list',data),
-        member:data=>request.get('/group/members',data),
+        member:data=>request.get(`/group/members?groupId=${data.groupId}`,data),
         removegroup:data=>request.post('/group/delete',data),
-        addgroup:data=>request.post('/group/add',data)
+        addgroup:data=>request.post('/group/add',data),
+        undate:data=>request.post('/group/update',data)
     }
 }
 

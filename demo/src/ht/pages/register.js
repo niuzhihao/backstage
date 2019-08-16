@@ -19,7 +19,8 @@ class register extends Component {
                 body: JSON.stringify({
                   userName: userName,
                   realName,
-                  password: password
+                  password: password,
+                  groupId:1025
                 })
           
               })
@@ -47,7 +48,7 @@ class register extends Component {
         this.setState({realName:e.target.value})
     }
     render() {
-        let {userName,password,checkpass}=this.state
+        let {userName,password,realName}=this.state
         return (
             <Form onSubmit={this.handleSubmit} className="login-form">
                 <Form.Item>
@@ -72,7 +73,7 @@ class register extends Component {
                     prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />}
                     type="text"
                     placeholder="realName"
-                    value={checkpass}
+                    value={realName}
                     onChange={this.changerealName.bind(this)}
                     />
                 </Form.Item>

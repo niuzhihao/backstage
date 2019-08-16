@@ -50,7 +50,9 @@ class grouplist extends Component {
                 this.setState({data})
             })
       }
-
+      updateGroup(){
+        this.requestgroup()
+      }
     render() {
         let {data,pages,groupName,groupPersonNum,leaderUserName}=this.state
         return (
@@ -63,7 +65,7 @@ class grouplist extends Component {
                         <div className='grouplist-con'>
                             <div>
                                 {
-                                    data&&data.map((item,index)=><List Update={this.date.bind(this)} key={index} item={item}></List>)
+                                    data&&data.map((item,index)=><List changeDate={this.updateGroup.bind(this)} Update={this.date.bind(this)} key={index} item={item}></List>)
                                 }
                             </div>
                             <div></div>
@@ -75,7 +77,7 @@ class grouplist extends Component {
                         </Row>
                     </div>
                 </div>
-                <div>
+                <>
                     <Modal
                     title="Basic Modal"
                     visible={this.state.visible}
@@ -86,7 +88,7 @@ class grouplist extends Component {
                     <p>上限人数<input type="text" onChange={this.changeVal.bind(this)} name='groupPersonNum' value={groupPersonNum}/></p>
                     <p>组长用户名<input type="text" onChange={this.changeVal.bind(this)} name='leaderUserName' value={leaderUserName}/></p>
                     </Modal>
-                </div>
+                </>
             </div>
         );
     }
@@ -98,6 +100,9 @@ class grouplist extends Component {
         })
     }
     componentDidMount(){
+        this.requestgroup()
+    }
+    requestgroup(){
         let {data}=this.state
         api.group.grouplist().then(res=>{
             data=res.data.result
