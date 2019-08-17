@@ -65,10 +65,12 @@ class member extends Component {
 
     }
     componentDidMount(){
-        let {data}=this.state
+        let {data,groupId,dataindex}=this.state
         api.group.grouplist().then(res=>{
             data=res.data.result
-            this.setState({data})
+            groupId=res.data.result[dataindex].groupId
+            this.getgroupmember(groupId)
+            this.setState({data,groupId})
         })
         this.groupMember()
         
@@ -76,16 +78,17 @@ class member extends Component {
 
     groupMember(){
         let {data,dataindex,groupId}=this.state
-        data.forEach((item,index)=>{
-            
-            if(index===dataindex){
-                console.log(index,'index')
-                this.setState({
-                    groupId:item.groupId
-                })
-            }
-        })
-        console.log(dataindex)
+
+        if(data[0]){
+            groupId=data[dataindex].groupId
+            this.setState({
+                groupId
+            })
+        }
+        this.getgroupmember(groupId)
+
+    }
+    getgroupmember(groupId){
         api.group.member({groupId}).then(res=>{
             let newList=[]
             res.data.result.forEach((item,index)=>{
@@ -101,7 +104,6 @@ class member extends Component {
                 list:newList
             })
         })
-
     }
 
 
